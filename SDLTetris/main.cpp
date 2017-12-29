@@ -3,9 +3,13 @@
 
 int main(int argc, char* argv[])
 {
-	Game* game = new Game();
-	game->init();
-	game->run();
+	Game* game;
+	if (!(game->init()))
+	{
+		printf("Game could not be started");
+	}
+	else
+	{
 
-	return 0;
+	}
 }
