@@ -8,10 +8,8 @@ class Game
 	SDL_Window* window;
 	SDL_Surface* screenSurface;
 	SDL_Renderer* renderer;
+	SDL_Texture* boardTexture;
 	bool isRunning = false;
-
-	const int SCREEN_WIDTH = 640;
-	const int SCREEN_HEIGHT = 480;
 
 	public:
 	Game();
@@ -19,10 +17,12 @@ class Game
 
 	bool running() { return isRunning; }
 	bool init();
+	bool loadMedia();
 	void run();
 	void handleEvents();
 	void update();
 	void render();
 	void close();
+
 };
 #endif /*GAME_H */

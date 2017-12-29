@@ -1,7 +1,15 @@
 #include "Game.h"
 #include <SDL.h>
+#include <SDL_image.h>
 #include <cstdio>
 
+const int FPS = 60;
+const int frameDelay = 1000 / FPS;
+Uint32 frameStart;
+int frameTime;
+
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 640;
 
 Game::Game()
 {
@@ -24,7 +32,6 @@ bool Game::init()
 	else
 	{
 		// Create window
-		isRunning = true;
 		window = SDL_CreateWindow("SDL Tetris", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (window == NULL)
 		{
@@ -44,6 +51,14 @@ bool Game::init()
 			{
 				// Initialize renderer color
 				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				if (loadMedia())
+				{
+					isRunning = true;
+				}
+				else
+				{
+					success = false;
+				}
 			}
 		}
 
@@ -53,25 +68,62 @@ bool Game::init()
 	return success;
 }
 
+bool Game::loadMedia()
+{
+	bool success = true;
+	int imgFlags = IMG_INIT_PNG;
+	if (!(IMG_Init(imgFlags) & imgFlags))
+	{
+		printf("SDL_image could not initialize!: %s\n", IMG_GetError());
+		success = false;
+	}
+	else
+	{
+		SDL_Surface* tempSurface = IMG_Load("asset\\board.png");
+		if (tempSurface == NULL)
+		{
+			printf("image could not be loaded!: %s\n", IMG_GetError());
+			success = false;
+		}
+		boardTexture = SDL_CreateTextureFromSurface(renderer, tempSurface);
+		SDL_FreeSurface(tempSurface);
+
+		return success;
+	}
+}
+
+
 void Game::run()
 {
 	while (isRunning)
 	{
+		frameStart = SDL_GetTicks();
+
 		handleEvents();
+		update();
+		render();
+		frameTime = SDL_GetTicks() - frameStart;
+		if (frameDelay > frameTime)
+		{
+			SDL_Delay(frameDelay - frameTime);
+		}
 	}
+	close();
 }
 
 void Game::handleEvents()
 {
 	SDL_Event event;
-	SDL_PollEvent(&event);
-	switch (event.type)
+	if (SDL_PollEvent(&event) != 0)
 	{
-		case SDL_QUIT: 
-			isRunning = false;
-			break;
-		default: 
-			break;
+		switch (event.type)
+		{
+			case SDL_QUIT:
+				isRunning = false;
+				break;
+			default:
+				break;
+		}
 	}
 }
 
@@ -81,8 +133,17 @@ void Game::update()
 
 void Game::render()
 {
+	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, boardTexture, NULL, NULL);
+	SDL_RenderPresent(renderer);
 }
 
 void Game::close()
 {
+	SDL_DestroyWindow(window);
+	window = NULL;
+	SDL_DestroyRenderer(renderer);
+	renderer = NULL;
+
+	SDL_Quit();
 }
