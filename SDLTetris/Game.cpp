@@ -11,6 +11,8 @@ int frameTime;
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 640;
 
+SDL_Renderer* Game::renderer = NULL;
+
 Game::Game()
 {
 }

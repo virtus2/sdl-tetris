@@ -15,6 +15,7 @@ class Game
 	Game();
 	~Game();
 
+	static SDL_Renderer* renderer;
 	bool running() { return isRunning; }
 	bool init();
 	bool loadMedia();
