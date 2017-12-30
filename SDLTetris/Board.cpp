@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "TextureLoader.h"
+#include "Game.h"
 
 Board::Board()
 {

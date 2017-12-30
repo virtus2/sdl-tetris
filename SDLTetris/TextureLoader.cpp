@@ -1,5 +1,6 @@
 #include "TextureLoader.h"
 #include "Game.h"
+
 SDL_Texture* TextureLoader::loadTexture(std::string path)
 {
 	SDL_Surface* tempSurface = IMG_Load(path.c_str());

@@ -1,9 +1,11 @@
 #include "Game.h"
 #include <cstdio>
 
+
+Game* game;
 int main(int argc, char* argv[])
 {
-	Game* game = new Game();
+	game = new Game();
 	game->init();
 	game->run();
 

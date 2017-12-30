@@ -1,6 +1,6 @@
 #pragma once
-#include "Game.h"
-
+#include <SDL.h>
+#include <SDL_image.h>
 const int TEXTURE_WIDTH = 32;
 const int TEXTURE_HEIGHT = 32;
 const int BOARD_WIDTH = 400;
