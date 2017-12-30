@@ -1,7 +1,7 @@
 #include "Board.h"
 #include "TextureLoader.h"
 #include "Game.h"
-
+#include "Block.h"
 Board::Board()
 {
 	boarderTexture = TextureLoader::loadTexture("asset\\boarder.png");
@@ -15,12 +15,10 @@ Board::Board()
 	dstR.y = 0;
 	dstR.w = BOARD_WIDTH;
 	dstR.h = BOARD_HEIGHT;
+	Block* block = new Block();
+	setBlock(block);
 }
 
-
-Board::~Board()
-{
-}
 
 void Board::draw()
 {
@@ -47,10 +45,18 @@ void Board::draw()
 			}
 			else if (boardArr[i][j] == TILE::BLOCK)
 			{
-
+				dst.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2 + j * TEXTURE_WIDTH;
+				dst.y = 32 + i * TEXTURE_HEIGHT;
+				dst.w = TEXTURE_WIDTH;
+				dst.h = TEXTURE_HEIGHT;
 			}
 		}
 	}
+}
+
+void update()
+{
+
 }
 
 void Board::destroy()

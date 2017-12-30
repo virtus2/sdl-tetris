@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include "Block.h"
 const int TEXTURE_WIDTH = 32;
 const int TEXTURE_HEIGHT = 32;
 const int BOARD_WIDTH = 400;
@@ -48,8 +49,8 @@ class Board
 	}; // standard tetris board size
 	public:
 	Board();
-	~Board();
 
+	void update();
 	void draw();
 	void destroy();
 };

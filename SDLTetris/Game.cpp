@@ -82,6 +82,7 @@ void Game::run()
 		handleEvents();
 		update();
 		render();
+
 		frameTime = SDL_GetTicks() - frameStart;
 		if (frameDelay > frameTime)
 		{
@@ -109,6 +110,8 @@ void Game::handleEvents()
 
 void Game::update()
 {
+	board->update();
+	
 }
 
 void Game::render()
