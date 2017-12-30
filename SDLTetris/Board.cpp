@@ -24,7 +24,33 @@ Board::~Board()
 
 void Board::draw()
 {
-	SDL_RenderCopy(Game::renderer, boarderTexture, &srcR, &dstR);
+	SDL_Rect dst;
+	for (int i = 0; i < 22; i++)
+	{
+		for (int j = 0; j < 12; j++)
+		{
+			if (boardArr[i][j] == TILE::BORDER)
+			{
+				dst.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2 + j * TEXTURE_WIDTH;
+				dst.y = 32 + i * TEXTURE_HEIGHT;
+				dst.w = TEXTURE_WIDTH;
+				dst.h = TEXTURE_HEIGHT;
+				SDL_RenderCopy(Game::renderer, boarderTexture, &srcR, &dst);
+			}
+			else if (boardArr[i][j] == TILE::EMPTY)
+			{
+				dst.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2 + j * TEXTURE_WIDTH;
+				dst.y = 32 + i * TEXTURE_HEIGHT;
+				dst.w = TEXTURE_WIDTH;
+				dst.h = TEXTURE_HEIGHT;
+				SDL_RenderCopy(Game::renderer, emptyTexture, &srcR, &dst);
+			}
+			else if (boardArr[i][j] == TILE::BLOCK)
+			{
+
+			}
+		}
+	}
 }
 
 void Board::destroy()

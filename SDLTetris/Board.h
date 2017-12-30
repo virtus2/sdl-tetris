@@ -6,6 +6,13 @@ const int TEXTURE_HEIGHT = 32;
 const int BOARD_WIDTH = 400;
 const int BOARD_HEIGHT = 600;
 
+enum TILE
+{
+	EMPTY,
+	BORDER,
+	BLOCK,
+};
+
 class Board
 {
 	private:
@@ -13,7 +20,8 @@ class Board
 	SDL_Texture* emptyTexture;
 	SDL_Rect srcR;
 	SDL_Rect dstR;
-	int board[24][12] =
+	
+	int boardArr[22][12] =
 	{
 		1,1,1,1,1,1,1,1,1,1,1,1,
 		1,0,0,0,0,0,0,0,0,0,0,1,
