@@ -4,6 +4,7 @@
 #include <SDL_image.h>
 
 class Board;
+class Block;
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 768;
 
@@ -14,6 +15,7 @@ class Game
 	SDL_Surface* screenSurface;
 	SDL_Texture* boardTexture;
 	bool isRunning = false;
+	Block* block;
 
 	public:
 	

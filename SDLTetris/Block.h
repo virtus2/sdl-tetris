@@ -1,7 +1,6 @@
 #pragma once
-#include <SDL_image.h>
 #include <SDL.h>
-
+#include "Tile.h"
 enum COLOR
 {
 	RED,
@@ -28,14 +27,12 @@ class Block
 {
 	private:
 	int color;
-	SDL_Texture* blockTexture;
 	bool isActive;
 
 	public:
-	int orientX;
-	int orientY;
+	Block();
+	Tile blockPiece[4];
 
 	void init();
 	void update();
-	void render(SDL_Rect src, SDL_Rect dst);
 };

@@ -46,6 +46,7 @@ bool Game::init()
 				{
 					isRunning = true;
 					board = new Board();
+					block = new Block();
 				}
 				else
 				{
@@ -110,8 +111,7 @@ void Game::handleEvents()
 
 void Game::update()
 {
-	board->update();
-	
+	board->setBlockOnMap(block);
 }
 
 void Game::render()
