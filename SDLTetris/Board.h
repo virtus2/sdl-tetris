@@ -17,14 +17,15 @@ class Board
 	SDL_Texture* blockTexture;
 	SDL_Rect srcR;
 	SDL_Rect dstR;
-	
-	Tile tileMap[22][12];
+
 	public:
 	Board();
 
+	Tile tileMap[22][12];
 	void update();
 	void draw();
 	void destroy();
 	void setBlockOnMap(Block* block);
+	void clearBlockOnMap(Block* block);
 };
 

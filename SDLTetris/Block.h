@@ -27,12 +27,13 @@ class Block
 {
 	private:
 	int color;
-	bool isActive;
 
 	public:
 	Block();
+	bool isActive;
 	Tile blockPiece[4];
+	Tile* lowestPiece;
 
-	void init();
-	void update();
+	void fall();
+	void move(int key);
 };

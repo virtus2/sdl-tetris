@@ -1,6 +1,7 @@
 #include "Block.h"
 #include "TextureLoader.h"
 #include "Game.h"
+#include "Board.h"
 #include <random>
 
 Block::Block()
@@ -15,6 +16,10 @@ Block::Block()
 
 	blockPiece[0].pos.xpos = 6;
 	blockPiece[0].pos.ypos = 1;
+	for (int i = 0; i < 4; i++)
+	{
+		blockPiece[i].tileType = TILE::BLOCK;
+	}
 	isActive = true;
 	switch (blockType)
 	{
@@ -25,6 +30,7 @@ Block::Block()
 			blockPiece[2].pos.ypos = 2;
 			blockPiece[3].pos.xpos = 6;
 			blockPiece[3].pos.ypos = 2;
+			lowestPiece = &blockPiece[3];
 			break;
 		case I:
 
@@ -47,7 +53,8 @@ Block::Block()
 	}
 	isActive = true;
 }
-void Block::update()
+
+void Block::fall()
 {
 	if (isActive)
 	{

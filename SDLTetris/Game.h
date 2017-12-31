@@ -2,7 +2,6 @@
 #define GAME_H
 #include <SDL.h>
 #include <SDL_image.h>
-
 class Board;
 class Block;
 const int SCREEN_WIDTH = 1280;
@@ -14,6 +13,9 @@ class Game
 	SDL_Window* window;
 	SDL_Surface* screenSurface;
 	SDL_Texture* boardTexture;
+
+	SDL_Thread* updateThread;
+
 	bool isRunning = false;
 	Block* block;
 
@@ -29,6 +31,7 @@ class Game
 	void update();
 	void render();
 	void close();
+
 
 };
 #endif /*GAME_H */

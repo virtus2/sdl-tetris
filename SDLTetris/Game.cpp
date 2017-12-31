@@ -7,9 +7,10 @@ const int frameDelay = 1000 / FPS;
 Uint32 frameStart;
 int frameTime;
 
-
+int fallStart;
+int currentTime;
+int fallCount;
 SDL_Renderer* Game::renderer = NULL;
-
 
 bool Game::init()
 {
@@ -45,8 +46,12 @@ bool Game::init()
 				if (loadMedia())
 				{
 					isRunning = true;
+
 					board = new Board();
 					block = new Block();
+					fallStart = SDL_GetTicks();
+					fallCount = 100;
+
 				}
 				else
 				{
@@ -98,20 +103,50 @@ void Game::handleEvents()
 	SDL_Event event;
 	if (SDL_PollEvent(&event) != 0)
 	{
-		switch (event.type)
+		if (event.type == SDL_KEYDOWN)
 		{
-			case SDL_QUIT:
-				isRunning = false;
-				break;
-			default:
-				break;
+			switch (event.key.keysym.sym)
+			{
+				case SDLK_LEFT:
+					block->move
+					break;
+				case SDLK_RIGHT:
+
+					break;
+				case SDLK_SPACE:
+
+					break;
+				case SDLK_LSHIFT:
+
+					break;
+				default:
+					break;
+			}
 		}
+		else if(event.type == SDL_QUIT)
+			isRunning = false;
 	}
 }
 
 void Game::update()
 {
+	board->clearBlockOnMap(block);
+	currentTime = SDL_GetTicks();
+	if (currentTime - fallStart > fallCount)
+	{
+		block->fall();
+		fallStart = SDL_GetTicks();
+	}
 	board->setBlockOnMap(block);
+
+	if(board->tileMap[block->lowestPiece->pos.ypos +1][block->lowestPiece->pos.xpos].tileType == TILE::BORDER ||
+	   board->tileMap[block->lowestPiece->pos.ypos + 1][block->lowestPiece->pos.xpos].tileType == TILE::BLOCK)
+			block->isActive = false;
+	if (block->isActive == false)
+	{
+		delete block;
+		block = new Block();
+	}
 }
 
 void Game::render()
@@ -130,3 +165,4 @@ void Game::close()
 
 	SDL_Quit();
 }
+

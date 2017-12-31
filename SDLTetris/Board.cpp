@@ -79,10 +79,19 @@ void Board::setBlockOnMap(Block * block)
 	}
 }
 
+void Board::clearBlockOnMap(Block * block)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		tileMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos].tileType = TILE::EMPTY;
+	}
+}
+
 
 void Board::destroy()
 {
 	SDL_DestroyTexture(boarderTexture);
 	SDL_DestroyTexture(emptyTexture);
+	SDL_DestroyTexture(blockTexture);
 }
 
