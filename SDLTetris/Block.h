@@ -30,10 +30,10 @@ class Block
 
 	public:
 	Block();
+
 	bool isActive;
 	Tile blockPiece[4];
-	Tile* lowestPiece;
-
+	void init();
 	void fall();
-	void move(int key);
+	void rotate();
 };

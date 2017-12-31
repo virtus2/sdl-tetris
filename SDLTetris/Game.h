@@ -18,20 +18,23 @@ class Game
 
 	bool isRunning = false;
 	Block* block;
+	Block* nextBlock;
 
 	public:
 	
 	static SDL_Renderer* renderer;
 	Board* board;
+	
 	bool running() { return isRunning; }
 	bool init();
 	bool loadMedia();
+	bool checkCollision();
 	void run();
 	void handleEvents();
 	void update();
 	void render();
 	void close();
-
+	
 
 };
 #endif /*GAME_H */

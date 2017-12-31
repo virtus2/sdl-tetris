@@ -87,6 +87,27 @@ void Board::clearBlockOnMap(Block * block)
 	}
 }
 
+void Board::moveBlock(Block* block, int key)
+{
+	Block* temp = block;
+	switch (key)
+	{
+		case SDLK_LEFT:
+			for (int i = 0; i < 4; i++)
+			{
+				tileMap[temp->blockPiece[i].pos.ypos][temp->blockPiece[i].pos.xpos].tileType = TILE::EMPTY;
+				temp->blockPiece[i].pos.xpos--;
+			}
+			break;
+		case SDLK_RIGHT:
+			for (int i = 0; i < 4; i++)
+			{
+				tileMap[temp->blockPiece[i].pos.ypos][temp->blockPiece[i].pos.xpos].tileType = TILE::EMPTY;
+				temp->blockPiece[i].pos.xpos++;
+			}
+			break;
+	}
+}
 
 void Board::destroy()
 {

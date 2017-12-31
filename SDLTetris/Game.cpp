@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <cstdio>
 #include "Board.h"
-
+#include "Tile.h"
 const int FPS = 60;
 const int frameDelay = 1000 / FPS;
 Uint32 frameStart;
@@ -49,8 +49,9 @@ bool Game::init()
 
 					board = new Board();
 					block = new Block();
+					block->init();
 					fallStart = SDL_GetTicks();
-					fallCount = 100;
+					fallCount = 500;
 
 				}
 				else
@@ -77,6 +78,12 @@ bool Game::loadMedia()
 	}
 	return success;
 }
+
+bool Game::checkCollision()
+{
+	return true;
+}
+
 
 
 void Game::run()
@@ -108,16 +115,16 @@ void Game::handleEvents()
 			switch (event.key.keysym.sym)
 			{
 				case SDLK_LEFT:
-					block->move
+					board->moveBlock(block, SDLK_LEFT);
 					break;
 				case SDLK_RIGHT:
-
+					board->moveBlock(block, SDLK_RIGHT);
 					break;
 				case SDLK_SPACE:
-
+					
 					break;
 				case SDLK_LSHIFT:
-
+					block->rotate();
 					break;
 				default:
 					break;
@@ -138,10 +145,8 @@ void Game::update()
 		fallStart = SDL_GetTicks();
 	}
 	board->setBlockOnMap(block);
-
-	if(board->tileMap[block->lowestPiece->pos.ypos +1][block->lowestPiece->pos.xpos].tileType == TILE::BORDER ||
-	   board->tileMap[block->lowestPiece->pos.ypos + 1][block->lowestPiece->pos.xpos].tileType == TILE::BLOCK)
-			block->isActive = false;
+	
+	
 	if (block->isActive == false)
 	{
 		delete block;

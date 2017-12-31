@@ -27,5 +27,6 @@ class Board
 	void destroy();
 	void setBlockOnMap(Block* block);
 	void clearBlockOnMap(Block* block);
+	void moveBlock(Block* block, int key);
 };
 

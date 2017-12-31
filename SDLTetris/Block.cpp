@@ -12,6 +12,10 @@ Block::Block()
 	std::uniform_int_distribution<int> colorDistribution(0, 5);
 	//int blockType = typeDistribution(typeGenerator);
 	int color = colorDistribution(colorGenerator);
+}
+
+void Block::init()
+{
 	int blockType = TYPE::O;
 
 	blockPiece[0].pos.xpos = 6;
@@ -30,7 +34,6 @@ Block::Block()
 			blockPiece[2].pos.ypos = 2;
 			blockPiece[3].pos.xpos = 6;
 			blockPiece[3].pos.ypos = 2;
-			lowestPiece = &blockPiece[3];
 			break;
 		case I:
 
@@ -63,4 +66,9 @@ void Block::fall()
 			blockPiece[i].pos.ypos++;
 		}
 	}
+}
+
+void Block::rotate()
+{
+
 }
