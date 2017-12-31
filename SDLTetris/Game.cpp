@@ -51,7 +51,7 @@ bool Game::init()
 					block = new Block();
 					block->init();
 					fallStart = SDL_GetTicks();
-					fallCount = 500;
+					fallCount = 100;
 
 				}
 				else
@@ -78,12 +78,6 @@ bool Game::loadMedia()
 	}
 	return success;
 }
-
-bool Game::checkCollision()
-{
-	return true;
-}
-
 
 
 void Game::run()
@@ -114,17 +108,37 @@ void Game::handleEvents()
 		{
 			switch (event.key.keysym.sym)
 			{
+				case SDLK_UP:
+					block->rotate();
+					break;
 				case SDLK_LEFT:
-					board->moveBlock(block, SDLK_LEFT);
+					if(!checkMoveCollision(SDLK_LEFT))
+						board->moveBlock(block, SDLK_LEFT);
 					break;
 				case SDLK_RIGHT:
-					board->moveBlock(block, SDLK_RIGHT);
+					if (!checkMoveCollision(SDLK_RIGHT))
+						board->moveBlock(block, SDLK_RIGHT);
+					break;
+				case SDLK_DOWN:
+					if (checkCollision())
+					{
+						block->isActive = false;
+						for (int i = 0; i < 4; i++)
+						{
+							board->landedMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos].tileType = BLOCK;
+						}
+					}
+					else
+					{
+						block->fall();
+						for (int i = 0; i < 4; i++)
+						{
+							board->tileMap[block->blockPiece[i].pos.ypos-1][block->blockPiece[i].pos.xpos].tileType = TILE::EMPTY;
+						}
+					}
 					break;
 				case SDLK_SPACE:
 					
-					break;
-				case SDLK_LSHIFT:
-					block->rotate();
 					break;
 				default:
 					break;
@@ -141,16 +155,28 @@ void Game::update()
 	currentTime = SDL_GetTicks();
 	if (currentTime - fallStart > fallCount)
 	{
-		block->fall();
+		if (checkCollision())
+		{
+			block->isActive = false;
+			for (int i = 0; i < 4; i++)
+			{
+				board->landedMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos].tileType = BLOCK;
+			}
+		}
+		else 
+		{
+			block->fall();
+		}
 		fallStart = SDL_GetTicks();
 	}
 	board->setBlockOnMap(block);
-	
-	
+	board->checkLine();
+
 	if (block->isActive == false)
 	{
 		delete block;
 		block = new Block();
+		block->init();
 	}
 }
 
@@ -159,6 +185,46 @@ void Game::render()
 	SDL_RenderClear(renderer);
 	board->draw();
 	SDL_RenderPresent(renderer);
+}
+
+bool Game::checkCollision()
+{
+	bool crash = false;
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (board->landedMap[block->blockPiece[i].pos.ypos + 1][block->blockPiece[i].pos.xpos].tileType == BORDER ||
+			board->landedMap[block->blockPiece[i].pos.ypos + 1][block->blockPiece[i].pos.xpos].tileType == BLOCK) 
+			crash = true;
+	}
+
+	return crash;
+}
+
+bool Game::checkMoveCollision(int key)
+{
+	bool crash = false;
+
+	switch (key)
+	{
+		case SDLK_LEFT:
+			for (int i = 0; i < 4; i++)
+			{
+				if (board->landedMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos - 1].tileType == BORDER ||
+					board->landedMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos - 1].tileType == BLOCK)
+					crash = true;
+			}
+			break;
+		case SDLK_RIGHT:
+			for (int i = 0; i < 4; i++)
+			{
+				if (board->landedMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos + 1].tileType == BORDER ||
+					board->landedMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos + 1].tileType == BLOCK)
+					crash = true;
+			}
+			break;
+	}
+	return crash;
 }
 
 void Game::close()

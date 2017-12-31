@@ -22,11 +22,14 @@ class Board
 	Board();
 
 	Tile tileMap[22][12];
+	Tile landedMap[22][12];
 	void update();
 	void draw();
 	void destroy();
 	void setBlockOnMap(Block* block);
 	void clearBlockOnMap(Block* block);
 	void moveBlock(Block* block, int key);
+	void checkLine();
+	void collapseLine(int line);
 };
 

@@ -18,7 +18,6 @@ class Game
 
 	bool isRunning = false;
 	Block* block;
-	Block* nextBlock;
 
 	public:
 	
@@ -28,11 +27,12 @@ class Game
 	bool running() { return isRunning; }
 	bool init();
 	bool loadMedia();
-	bool checkCollision();
 	void run();
 	void handleEvents();
 	void update();
 	void render();
+	bool checkCollision();
+	bool checkMoveCollision(int key);
 	void close();
 	
 
