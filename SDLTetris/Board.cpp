@@ -162,13 +162,11 @@ void Board::checkLine()
 				count++;
 				if (count == 10)
 				{
-					for (int k = 1; k < 11; k++)
+					removeLine(i);
+					for (int k = i; k > 1; k--)
 					{
-						landedMap[i][k].tileType = TILE::EMPTY;
-						tileMap[i][k].tileType = TILE::EMPTY;
-						
+						collapseLine(k);
 					}
-					collapseLine(i);
 				}
 			}
 			else
@@ -177,19 +175,28 @@ void Board::checkLine()
 	}
 }
 
+void Board::removeLine(int line)
+{
+	printf("Removing line %d\n", line);
+	for (int i = 1; i < 11; i++)
+	{
+		landedMap[line][i].tileType = TILE::EMPTY;
+		tileMap[line][i].tileType = TILE::EMPTY;
+	}
+}
+
 void Board::collapseLine(int line)
 {
-	for (int i = 1; i < line; i++)
+	printf("Collapes line %d to %d\n", line - 1, line);
+	for (int i = 1; i < 11; i++)
 	{
-		for (int j = 1; j < 11; j++)
+		if (landedMap[line - 1][i].tileType == TILE::BLOCK)
 		{
-			if (landedMap[i][j].tileType == TILE::BLOCK)
-			{
-				landedMap[i][j].tileType = TILE::EMPTY;
-				tileMap[i][j].tileType = TILE::EMPTY;
-				landedMap[i + 1][j].tileType = TILE::BLOCK;
-				tileMap[i + 1][j].tileType = TILE::BLOCK;
-			}
+			landedMap[line][i].tileType = TILE::BLOCK;
+			landedMap[line - 1][i].tileType = TILE::EMPTY;
+
+			tileMap[line][i].tileType = TILE::BLOCK;
+			tileMap[line - 1][i].tileType = TILE::EMPTY;
 		}
 	}
 }

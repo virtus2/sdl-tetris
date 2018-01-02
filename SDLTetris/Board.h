@@ -30,6 +30,7 @@ class Board
 	void clearBlockOnMap(Block* block);
 	void moveBlock(Block* block, int key);
 	void checkLine();
+	void removeLine(int line);
 	void collapseLine(int line);
 };
 
