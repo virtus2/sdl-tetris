@@ -30,10 +30,11 @@ class Block
 
 	public:
 	Block();
+	int blockType;
+	int rotateType;
 
 	bool isActive;
 	Tile blockPiece[4];
 	void init();
 	void fall();
-	void rotate();
 };

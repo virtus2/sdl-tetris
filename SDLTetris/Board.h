@@ -23,12 +23,12 @@ class Board
 
 	Tile tileMap[22][12];
 	Tile landedMap[22][12];
-	void update();
 	void draw();
 	void destroy();
 	void setBlockOnMap(Block* block);
 	void clearBlockOnMap(Block* block);
 	void moveBlock(Block* block, int key);
+	void rotateBlock(Block* block);
 	void checkLine();
 	void removeLine(int line);
 	void collapseLine(int line);

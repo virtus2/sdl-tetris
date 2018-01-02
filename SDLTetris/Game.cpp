@@ -10,6 +10,7 @@ int frameTime;
 int fallStart;
 int currentTime;
 int fallCount;
+int level;
 SDL_Renderer* Game::renderer = NULL;
 
 bool Game::init()
@@ -51,7 +52,7 @@ bool Game::init()
 					block = new Block();
 					block->init();
 					fallStart = SDL_GetTicks();
-					fallCount = 100;
+					fallCount = 500;
 
 				}
 				else
@@ -109,7 +110,16 @@ void Game::handleEvents()
 			switch (event.key.keysym.sym)
 			{
 				case SDLK_UP:
-					block->rotate();
+					switch (block->blockType)
+					{
+						case O: break; 
+						case I: if (!checkRotateCollision(block)) board->rotateBlock(block); break;
+						case S: if (!checkRotateCollision(block)) board->rotateBlock(block); break;
+						case Z: if (!checkRotateCollision(block)) board->rotateBlock(block); break;
+						case L: if (!checkRotateCollision(block)) board->rotateBlock(block); break;
+						case J: if (!checkRotateCollision(block)) board->rotateBlock(block); break;
+						case T: if (!checkRotateCollision(block)) board->rotateBlock(block); break;
+					}
 					break;
 				case SDLK_LEFT:
 					if(!checkMoveCollision(SDLK_LEFT))
@@ -224,6 +234,83 @@ bool Game::checkMoveCollision(int key)
 			}
 			break;
 	}
+	return crash;
+}
+
+bool Game::checkRotateCollision(Block * block)
+{
+	bool crash = false;
+	Tile temp[4];
+	switch (block->blockType)
+	{
+		case I:
+			if (block->rotateType == 0)
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos + 2;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos - 1;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos + 1;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos + 1;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos - 1;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos + 2;
+			}
+			else
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos - 2;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos + 1;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos - 1;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos - 1;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos + 1;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos - 2;
+
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				if (board->landedMap[temp[i].pos.ypos][temp[i].pos.xpos].tileType == TILE::BLOCK ||
+					board->landedMap[temp[i].pos.ypos][temp[i].pos.xpos].tileType == TILE::BORDER)
+					crash = true;
+			}
+			break;
+		case S:
+			if (block->rotateType == 0)
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos + 1;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos - 2;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos - 1;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos + 1;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos + 1;
+			}
+			else
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos - 1;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos + 2;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos + 1;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos - 1;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos - 1;
+			}
+			for (int i = 0; i < 4; i++)
+			{
+				if (board->landedMap[temp[i].pos.ypos][temp[i].pos.xpos].tileType == TILE::BLOCK ||
+					board->landedMap[temp[i].pos.ypos][temp[i].pos.xpos].tileType == TILE::BORDER)
+					crash = true;
+			}
+			break;
+		case Z:
+		case L:
+		case J:
+		case T:
+		default: break;
+	}
+
 	return crash;
 }
 

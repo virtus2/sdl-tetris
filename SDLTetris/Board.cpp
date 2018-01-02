@@ -106,10 +106,6 @@ void Board::draw()
 	}
 }
 
-void Board::update()
-{
-
-}
 
 void Board::setBlockOnMap(Block * block)
 {
@@ -146,6 +142,82 @@ void Board::moveBlock(Block* block, int key)
 				temp->blockPiece[i].pos.xpos++;
 			}
 			break;
+	}
+}
+
+void Board::rotateBlock(Block * block)
+{
+	switch (block->blockType)
+	{
+		case I:
+			if (block->rotateType == 0)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					tileMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos].tileType = EMPTY;
+				}
+				block->blockPiece[0].pos.xpos = block->blockPiece[0].pos.xpos + 2;
+				block->blockPiece[0].pos.ypos = block->blockPiece[0].pos.ypos - 1;
+				block->blockPiece[1].pos.xpos = block->blockPiece[1].pos.xpos + 1;
+				block->blockPiece[1].pos.ypos = block->blockPiece[1].pos.ypos;
+				block->blockPiece[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				block->blockPiece[2].pos.ypos = block->blockPiece[2].pos.ypos + 1;
+				block->blockPiece[3].pos.xpos = block->blockPiece[3].pos.xpos - 1;
+				block->blockPiece[3].pos.ypos = block->blockPiece[3].pos.ypos + 2;
+				block->rotateType = 1;
+			}
+			else if (block->rotateType == 1)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					tileMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos].tileType = EMPTY;
+				}
+				block->blockPiece[0].pos.xpos = block->blockPiece[0].pos.xpos - 2;
+				block->blockPiece[0].pos.ypos = block->blockPiece[0].pos.ypos + 1;
+				block->blockPiece[1].pos.xpos = block->blockPiece[1].pos.xpos - 1;
+				block->blockPiece[1].pos.ypos = block->blockPiece[1].pos.ypos;
+				block->blockPiece[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				block->blockPiece[2].pos.ypos = block->blockPiece[2].pos.ypos - 1;
+				block->blockPiece[3].pos.xpos = block->blockPiece[3].pos.xpos + 1;
+				block->blockPiece[3].pos.ypos = block->blockPiece[3].pos.ypos - 2;
+				block->rotateType = 0;
+			}
+			break;
+		case S: 
+			if (block->rotateType == 0)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					tileMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos].tileType = EMPTY;
+				}
+				block->blockPiece[0].pos.xpos = block->blockPiece[0].pos.xpos + 1;
+				block->blockPiece[0].pos.ypos = block->blockPiece[0].pos.ypos - 2;
+				block->blockPiece[1].pos.xpos = block->blockPiece[1].pos.xpos;
+				block->blockPiece[1].pos.ypos = block->blockPiece[1].pos.ypos - 1;
+				block->blockPiece[2].pos.xpos = block->blockPiece[2].pos.xpos + 1;
+				block->blockPiece[2].pos.ypos = block->blockPiece[2].pos.ypos;
+				block->blockPiece[3].pos.xpos = block->blockPiece[3].pos.xpos;
+				block->blockPiece[3].pos.ypos = block->blockPiece[3].pos.ypos + 1;
+				block->rotateType = 1;
+			}
+			else if (block->rotateType == 1)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					tileMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos].tileType = EMPTY;
+				}
+				block->blockPiece[0].pos.xpos = block->blockPiece[0].pos.xpos - 1;
+				block->blockPiece[0].pos.ypos = block->blockPiece[0].pos.ypos + 2;
+				block->blockPiece[1].pos.xpos = block->blockPiece[1].pos.xpos;
+				block->blockPiece[1].pos.ypos = block->blockPiece[1].pos.ypos + 1;
+				block->blockPiece[2].pos.xpos = block->blockPiece[2].pos.xpos - 1;
+				block->blockPiece[2].pos.ypos = block->blockPiece[2].pos.ypos;
+				block->blockPiece[3].pos.xpos = block->blockPiece[3].pos.xpos;
+				block->blockPiece[3].pos.ypos = block->blockPiece[3].pos.ypos - 1;
+				block->rotateType = 0;
+			}
+			break;
+		default: break;
 	}
 }
 

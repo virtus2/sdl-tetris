@@ -33,6 +33,7 @@ class Game
 	void render();
 	bool checkCollision();
 	bool checkMoveCollision(int key);
+	bool checkRotateCollision(Block* block);
 	void close();
 	
 
