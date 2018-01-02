@@ -9,7 +9,8 @@ Block::Block()
 	std::srand(std::time(nullptr));
 	int randomBlock = std::rand() % 7;
 	int randomColor = std::rand() % 3;
-	blockType = randomBlock;
+	//blockType = randomBlock;
+	blockType = 5;
 	color = randomColor; 
 	rotateType = 0;
 }
@@ -84,8 +85,9 @@ void Block::init()
 			break;
 		case L:
 			/*
-			*	123 L block
-			*	0
+			*	123  3	   0	01	L block
+			*	0	 2	 321	 2
+			*		 10			 3
 			*/
 			blockPiece[0].pos.xpos = 5;
 			blockPiece[0].pos.ypos = 2;
@@ -98,8 +100,9 @@ void Block::init()
 			break;
 		case J:
 			/*
-			*	012 J block
-			*	  3
+			*	012	  10	0		0	J block
+			*	  3	  2		123		1
+			*		  3			   32
 			*/
 			blockPiece[0].pos.xpos = 5;
 			blockPiece[0].pos.ypos = 1;
@@ -136,5 +139,182 @@ void Block::fall()
 		{
 			blockPiece[i].pos.ypos++;
 		}
+	}
+}
+
+void Block::rotate()
+{
+	switch (blockType)
+	{
+		case I:
+			if (rotateType == 0)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos + 2;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos - 1;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos + 1;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos + 1;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos - 1;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos + 2;
+				rotateType = 1;
+			}
+			else if (rotateType == 1)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos - 2;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos + 1;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos - 1;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos - 1;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos + 1;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos - 2;
+				rotateType = 0;
+			}
+			break;
+		case S:
+			if (rotateType == 0)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos + 1;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos - 2;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos - 1;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos + 1;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos + 1;
+				rotateType = 1;
+			}
+			else if (rotateType == 1)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos - 1;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos + 2;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos + 1;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos - 1;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos - 1;
+				rotateType = 0;
+			}
+			break;
+		case Z:
+			if (rotateType == 0)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos + 2;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos - 1;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos + 1;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos - 1;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos - 1;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos;
+				rotateType = 1;
+
+			}
+			else if (rotateType == 1)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos - 2;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos + 1;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos - 1;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos + 1;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos + 1;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos;
+				rotateType = 0;
+			}
+			break;
+		case L:
+			if (rotateType == 0)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos + 2;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos + 1;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos + 1;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos - 1;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos - 1;
+				rotateType = 1;
+			}
+			else if (rotateType == 1)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos - 2;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos + 1;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos - 1;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos - 1;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos + 1;
+				rotateType = 2;
+			}
+			else if (rotateType == 2)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos - 2;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos - 1;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos - 1;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos + 1;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos + 1;
+				rotateType = 3;
+			}
+			else if (rotateType == 3)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos + 2;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos - 1;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos + 1;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos + 1;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos - 1;
+				rotateType = 0;
+			}
+		case J:
+			if (rotateType == 0)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos + 2;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos - 1;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos - 1;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos - 1;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos - 1;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos;
+				rotateType = 1;
+			}
+			else if (rotateType == 1)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos - 2;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos - 1;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos + 1;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos + 1;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos - 1;
+				rotateType = 2;
+			}
+			else if (rotateType == 2)
+			{
+				blockPiece[0].pos.xpos = blockPiece[0].pos.xpos + 1;
+				blockPiece[0].pos.ypos = blockPiece[0].pos.ypos;
+				blockPiece[1].pos.xpos = blockPiece[1].pos.xpos + 1;
+				blockPiece[1].pos.ypos = blockPiece[1].pos.ypos;
+				blockPiece[2].pos.xpos = blockPiece[2].pos.xpos;
+				blockPiece[2].pos.ypos = blockPiece[2].pos.ypos + 1;
+				blockPiece[3].pos.xpos = blockPiece[3].pos.xpos - 2;
+				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos + 1;
+				rotateType = 3;
+			}
+			else if (rotateType == 3)
+			{
+
+			}
+	
 	}
 }

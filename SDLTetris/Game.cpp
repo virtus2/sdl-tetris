@@ -267,12 +267,6 @@ bool Game::checkRotateCollision(Block * block)
 				temp[3].pos.ypos = block->blockPiece[3].pos.ypos - 2;
 
 			}
-			for (int i = 0; i < 4; i++)
-			{
-				if (board->landedMap[temp[i].pos.ypos][temp[i].pos.xpos].tileType == TILE::BLOCK ||
-					board->landedMap[temp[i].pos.ypos][temp[i].pos.xpos].tileType == TILE::BORDER)
-					crash = true;
-			}
 			break;
 		case S:
 			if (block->rotateType == 0)
@@ -297,20 +291,123 @@ bool Game::checkRotateCollision(Block * block)
 				temp[3].pos.xpos = block->blockPiece[3].pos.xpos;
 				temp[3].pos.ypos = block->blockPiece[3].pos.ypos - 1;
 			}
-			for (int i = 0; i < 4; i++)
-			{
-				if (board->landedMap[temp[i].pos.ypos][temp[i].pos.xpos].tileType == TILE::BLOCK ||
-					board->landedMap[temp[i].pos.ypos][temp[i].pos.xpos].tileType == TILE::BORDER)
-					crash = true;
-			}
 			break;
 		case Z:
+			if (block->rotateType == 0)
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos + 2;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos - 1;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos + 1;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos - 1;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos - 1;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos;
+			}
+			else
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos - 2;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos + 1;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos - 1;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos + 1;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos + 1;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos;
+			}
 		case L:
+			if (block->rotateType == 0)
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos + 2;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos + 1;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos + 1;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos - 1;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos - 1;
+			}
+			else if (block->rotateType == 1)
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos - 2;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos + 1;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos - 1;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos - 1;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos + 1;
+			}
+			else if (block->rotateType == 2)
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos - 2;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos - 1;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos - 1;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos + 1;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos + 1;
+			}
+			else if (block->rotateType == 3)
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos + 2;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos - 1;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos + 1;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos + 1;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos - 1;
+			}
 		case J:
+			if (block->rotateType == 0)
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos + 2;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos - 1;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos - 1;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos - 1;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos - 1;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos;
+			}
+			else if (block->rotateType == 1)
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos - 2;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos - 1;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos + 1;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos + 1;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos - 1;
+			}
+			else if (block->rotateType == 2)
+			{
+				temp[0].pos.xpos = block->blockPiece[0].pos.xpos + 1;
+				temp[0].pos.ypos = block->blockPiece[0].pos.ypos;
+				temp[1].pos.xpos = block->blockPiece[1].pos.xpos + 1;
+				temp[1].pos.ypos = block->blockPiece[1].pos.ypos;
+				temp[2].pos.xpos = block->blockPiece[2].pos.xpos;
+				temp[2].pos.ypos = block->blockPiece[2].pos.ypos + 1;
+				temp[3].pos.xpos = block->blockPiece[3].pos.xpos - 2;
+				temp[3].pos.ypos = block->blockPiece[3].pos.ypos + 1;
+			}
+			else if (block->rotateType == 3)
+			{
+
+			}
 		case T:
 		default: break;
 	}
 
+	for (int i = 0; i < 4; i++)
+	{
+		if (board->landedMap[temp[i].pos.ypos][temp[i].pos.xpos].tileType == TILE::BLOCK ||
+			board->landedMap[temp[i].pos.ypos][temp[i].pos.xpos].tileType == TILE::BORDER)
+			crash = true;
+	}
 	return crash;
 }
 

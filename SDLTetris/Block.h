@@ -37,4 +37,5 @@ class Block
 	Tile blockPiece[4];
 	void init();
 	void fall();
+	void rotate();
 };
