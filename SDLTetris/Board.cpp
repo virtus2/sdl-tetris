@@ -182,7 +182,6 @@ void Board::checkLine()
 
 void Board::removeLine(int line)
 {
-	printf("Removing line %d\n", line);
 	for (int i = 1; i < 11; i++)
 	{
 		landedMap[line][i].tileType = TILE::EMPTY;
@@ -192,7 +191,6 @@ void Board::removeLine(int line)
 
 void Board::collapseLine(int line)
 {
-	printf("Collapes line %d to %d\n", line - 1, line);
 	for (int i = 1; i < 11; i++)
 	{
 		if (landedMap[line - 1][i].tileType == TILE::BLOCK)
