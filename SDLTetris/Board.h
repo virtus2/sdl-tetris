@@ -13,20 +13,26 @@ const int BOARD_HEIGHT = 600;
 class Board
 {
 	private:
-	SDL_Texture* boarderTexture;
+	SDL_Texture* borderTexture;
 	SDL_Texture* emptyTexture;
 	SDL_Texture* blockTexture;
 	SDL_Rect srcR;
 	SDL_Rect dstR;
+	SDL_Rect dst;
+	SDL_Rect nextsrc;
+	SDL_Rect nextdst;
 
 	public:
+	
 
 	Tile tileMap[22][12];
 	Tile landedMap[22][12];
+	int nextMap[6][6];
 	void init();
 	void draw();
 	void destroy();
 	void setBlockOnMap(Block* block);
+	void drawBlockOnNext(Block* block);
 	void clearBlockOnMap(Block* block);
 	void moveBlock(Block* block, int key);
 	void rotateBlock(Block* block);

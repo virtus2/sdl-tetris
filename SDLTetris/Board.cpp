@@ -4,7 +4,7 @@
 
 void Board::init()
 {
-	boarderTexture = TextureLoader::loadTexture("asset\\boarder.png");
+	borderTexture = TextureLoader::loadTexture("asset\\boarder.png");
 	emptyTexture = TextureLoader::loadTexture("asset\\empty.png");
 	blockTexture = TextureLoader::loadTexture("asset\\block.png");
 
@@ -12,10 +12,16 @@ void Board::init()
 	srcR.y = 0;
 	srcR.w = TEXTURE_WIDTH;
 	srcR.h = TEXTURE_HEIGHT;
+	nextsrc.w = TEXTURE_WIDTH;
+	nextsrc.h = TEXTURE_HEIGHT;
 	dstR.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2;
 	dstR.y = 0;
 	dstR.w = BOARD_WIDTH;
 	dstR.h = BOARD_HEIGHT;
+	dst.w = TEXTURE_WIDTH;
+	dst.h = TEXTURE_HEIGHT;
+	nextdst.w = TEXTURE_WIDTH;
+	nextdst.h = TEXTURE_HEIGHT;
 
 	for (int i = 0; i < 22; i++)
 	{
@@ -38,13 +44,17 @@ void Board::init()
 
 		}
 	}
+	for (int i = 0; i < 6; i++)
+	{
+		for (int j = 0; j < 6; j++)
+		{
+
+		}
+	}
 }
 
 void Board::draw()
 {
-	SDL_Rect dst;
-	dst.w = TEXTURE_WIDTH;
-	dst.h = TEXTURE_HEIGHT;
 	/* test output
 	for (int i = 0; i < 22; i++)
 	{
@@ -85,7 +95,7 @@ void Board::draw()
 			if (tileMap[i][j].tileType == TILE::BORDER)
 			{
 				dst.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2 + j * TEXTURE_WIDTH;
-				tileMap[i][j].render(boarderTexture, &srcR, &dst);
+				tileMap[i][j].render(borderTexture, &srcR, &dst);
 			}
 			else if (tileMap[i][j].tileType == TILE::EMPTY)
 			{
@@ -99,6 +109,7 @@ void Board::draw()
 			}
 		}
 	}
+
 }
 
 
@@ -107,6 +118,65 @@ void Board::setBlockOnMap(Block * block)
 	for (int i = 0; i < 4; i++)
 	{
 		tileMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos].tileType = TILE::BLOCK;
+	}
+}
+
+void Board::drawBlockOnNext(Block * block)
+{
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			if (i == 0 || i == 7)
+			{
+				nextdst.x = 3 * SCREEN_WIDTH / 4 + j * TEXTURE_WIDTH - 4 * TEXTURE_WIDTH + 32;
+				nextdst.y = SCREEN_HEIGHT / 4 + 5 * TEXTURE_HEIGHT + i * TEXTURE_HEIGHT - 8 * TEXTURE_HEIGHT;
+				SDL_RenderCopy(Game::renderer, borderTexture, &srcR, &nextdst);
+			}
+			else
+			{
+				if (j == 0 || j == 7)
+				{
+					nextdst.x = 3 * SCREEN_WIDTH / 4 + j * TEXTURE_WIDTH - 4 * TEXTURE_WIDTH + 32;
+					nextdst.y = SCREEN_HEIGHT / 4 + 5 * TEXTURE_HEIGHT + i * TEXTURE_HEIGHT - 8 * TEXTURE_HEIGHT;
+					SDL_RenderCopy(Game::renderer, borderTexture, &srcR, &nextdst);
+				}
+			}
+		}
+	}
+	switch (block->blockType)
+	{
+		case O:
+			for (int i = 0; i < 2; i++)
+			{
+				for (int j = 0; j < 2; j++)
+				{
+					nextdst.x = 3 * SCREEN_WIDTH / 4 + i * TEXTURE_WIDTH;
+					nextdst.y = SCREEN_HEIGHT / 4 + j * TEXTURE_HEIGHT;
+					block->blockPiece[i].render(blockTexture, &nextsrc, &nextdst);
+				}
+			}
+			break;
+		case I:
+			for (int i = 0; i < 4; i++)
+			{
+				nextdst.x = 3 * SCREEN_WIDTH / 4 + i * TEXTURE_WIDTH - TEXTURE_WIDTH;
+				nextdst.y = SCREEN_HEIGHT / 4;
+				block->blockPiece[i].render(blockTexture, &nextsrc, &nextdst);
+			}
+			break;
+		case Z:
+
+			break;
+		case L:
+
+			break;
+		case J:
+
+			break;
+		case T:
+
+			break;
 	}
 }
 
@@ -212,7 +282,7 @@ void Board::collapseLine(int line)
 
 void Board::destroy()
 {
-	SDL_DestroyTexture(boarderTexture);
+	SDL_DestroyTexture(borderTexture);
 	SDL_DestroyTexture(emptyTexture);
 	SDL_DestroyTexture(blockTexture);
 }

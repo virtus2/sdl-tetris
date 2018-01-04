@@ -77,8 +77,10 @@ void Game::gameStart()
 	isOver = false;
 	board = new Board();
 	block = new Block();
+	nextBlock = new Block();
 	board->init();
 	block->init();
+	
 	fallStart = SDL_GetTicks();
 	fallCount = 500;
 
@@ -216,8 +218,9 @@ void Game::update()
 	if (block->isActive == false)
 	{
 		delete block;
-		block = new Block();
+		block = nextBlock;
 		block->init();
+		nextBlock = new Block();
 	}
 }
 
@@ -225,6 +228,7 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 	board->draw();
+	board->drawBlockOnNext(nextBlock);
 	SDL_RenderPresent(renderer);
 }
 

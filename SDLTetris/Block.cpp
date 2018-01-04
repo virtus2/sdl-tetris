@@ -2,11 +2,9 @@
 #include "TextureLoader.h"
 #include "Game.h"
 #include "Board.h"
-#include <ctime>
 
 Block::Block()
 {
-	std::srand(std::time(nullptr));
 	int randomBlock = std::rand() % 7;
 	int randomColor = std::rand() % 3;
 	blockType = randomBlock;
