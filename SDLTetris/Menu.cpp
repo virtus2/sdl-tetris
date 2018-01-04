@@ -20,8 +20,12 @@ bool Menu::init()
 		}
 		startText = new Text("asset\\FFFFORWA.TTF", "START", 20, 255, 255, 255);
 		closeText = new Text("asset\\FFFFORWA.TTF", "CLOSE", 20, 255, 255, 255);
-		tetrisText = new Text("asset\\FFFFORWA.TTF", "T E T R I S", 36, 255, 0, 0);
-		for (int i = 0; i < 3; i++)
+		tetrisText = new Text("asset\\FFFFORWA.TTF", "T E T R I S", 40, 255, 0, 0);
+		arrowText = new Text("asset\\FFFFORWA.TTF", "o", 12, 255, 255, 255);
+		textList[0] = tetrisText;
+		textList[1] = startText;
+		textList[2] = closeText;
+		for (int i = 0; i < TEXT_COUNT; i++)
 		{
 			if (textList[i] == NULL)
 			{
@@ -29,6 +33,7 @@ bool Menu::init()
 				return success;
 			}
 		}
+		menu = MENU::START;
 	}
 
 
@@ -38,7 +43,6 @@ bool Menu::init()
 int Menu::run()
 {
 	int choose = MENU::NONE;
-	int menu = MENU::START;
 	while (choose == MENU::NONE)
 	{
 		SDL_Event event;
@@ -65,26 +69,40 @@ int Menu::run()
 		SDL_RenderClear(Game::renderer);
 		renderText();
 		SDL_RenderPresent(Game::renderer);
+		SDL_Delay(10);
 	}
 	return choose;
 }
 
 void Menu::renderText()
 {
-	SDL_Rect dst;
-	dst.h = startText->getHeight();
-	dst.w = startText->getWidth();
-	for (int i = 0; i < 3; i++)
+	arrowDst.h = arrowText->getHeight();
+	arrowDst.w = arrowText->getWidth();
+	for (int i = 0; i < TEXT_COUNT; i++)
 	{
 		dst.h = textList[i]->getHeight();
 		dst.w = textList[i]->getWidth();
+		dst.x = SCREEN_WIDTH / 2 - dst.w / 2;
+		dst.y = SCREEN_HEIGHT / 3 + dst.h / 2 + i * 100;
+		if (menu == MENU::START && textList[i] == startText)
+		{
+			arrowDst.x = dst.x - 20;
+			arrowDst.y = dst.y;
+			arrowText->render(&arrowDst);
+		}
+		else if (menu == MENU::CLOSE && textList[i] == closeText)
+		{
+			arrowDst.x = dst.x - 20;
+			arrowDst.y = dst.y;
+			arrowText->render(&arrowDst);
+		}
 		textList[i]->render(&dst);
 	}
 }
 
 void Menu::close()
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < TEXT_COUNT; i++)
 	{
 		textList[i]->destroy();
 	}
