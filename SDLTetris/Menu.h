@@ -3,18 +3,21 @@
 #include <SDL_ttf.h>
 #include <SDL.h>
 #include <SDL_image.h>
+#include "Text.h"
 enum MENU
 {
+	NONE,
 	START,
 	CLOSE,
-
 };
 
 class Menu
 {
 	private:
-	TTF_Font* gameFont;
-	SDL_Texture* textTexture;
+	Text* startText;
+	Text* closeText;
+	Text* tetrisText;
+	Text* textList[3];
 
 	public:
 	bool init();

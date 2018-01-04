@@ -49,15 +49,25 @@ bool Game::init()
 				{
 					isRunning = true;
 					menu = new Menu();
-					menu->init();
-					menu->run();
+					if (!menu->init()) 
+					{
+						success = false;
+						return success;
+					}
+					int choose = menu->run();
+					if (choose == MENU::START)
+					{
+						board = new Board();
+						block = new Block();
+						block->init();
+						fallStart = SDL_GetTicks();
+						fallCount = 500;
+					}
+					else if (choose == MENU::CLOSE)
+					{	
+						success = false;
+					}
 					
-					board = new Board();
-					block = new Block();
-					block->init();
-					fallStart = SDL_GetTicks();
-					fallCount = 500;
-
 				}
 				else
 				{

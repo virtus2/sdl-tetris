@@ -15,20 +15,20 @@ bool Menu::init()
 		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
 		{
 			printf("Linear texture filltering not enabled!\n");
-		}
-		gameFont = TTF_OpenFont("C:\\windows\\fonts\\comic.ttf", 12);
-		if (gameFont == NULL)
-		{
-			printf("Failed to load font!\n");
 			success = false;
+			return success;
 		}
-		SDL_Color textColor = { 255,255,255 };
-		SDL_Surface* textSurface = TTF_RenderText_Solid(gameFont, "start", textColor);
-		textTexture = SDL_CreateTextureFromSurface(Game::renderer, textSurface);
-		SDL_FreeSurface(textSurface);
-
-		
-
+		startText = new Text("asset\\FFFFORWA.TTF", "START", 20, 255, 255, 255);
+		closeText = new Text("asset\\FFFFORWA.TTF", "CLOSE", 20, 255, 255, 255);
+		tetrisText = new Text("asset\\FFFFORWA.TTF", "T E T R I S", 36, 255, 0, 0);
+		for (int i = 0; i < 3; i++)
+		{
+			if (textList[i] == NULL)
+			{
+				success = false;
+				return success;
+			}
+		}
 	}
 
 
@@ -37,32 +37,57 @@ bool Menu::init()
 
 int Menu::run()
 {
-	int choose;
-	while (!choose)
+	int choose = MENU::NONE;
+	int menu = MENU::START;
+	while (choose == MENU::NONE)
 	{
 		SDL_Event event;
 		if (SDL_PollEvent(&event) != 0)
 		{
 			if (event.type == SDL_KEYDOWN)
 			{
-				if (event.key.keysym.sym == SDLK_KP_ENTER)
+				if (event.key.keysym.sym == SDLK_RETURN)
 				{
-					printf("enter");
+					choose = menu;
+				}
+				if (event.key.keysym.sym == SDLK_DOWN)
+				{
+					menu == MENU::START ? menu = MENU::CLOSE : menu = MENU::START;
+				}
+				if (event.key.keysym.sym == SDLK_UP)
+				{
+					menu == MENU::START ? menu = MENU::CLOSE : menu = MENU::START;
 				}
 			}
-			else if(event.type == SDL_QUIT)
+			else if (event.type == SDL_QUIT)
+				choose = MENU::CLOSE;
 		}
+		SDL_RenderClear(Game::renderer);
+		renderText();
+		SDL_RenderPresent(Game::renderer);
 	}
 	return choose;
 }
 
 void Menu::renderText()
 {
-
+	SDL_Rect dst;
+	dst.h = startText->getHeight();
+	dst.w = startText->getWidth();
+	for (int i = 0; i < 3; i++)
+	{
+		dst.h = textList[i]->getHeight();
+		dst.w = textList[i]->getWidth();
+		textList[i]->render(&dst);
+	}
 }
 
 void Menu::close()
 {
+	for (int i = 0; i < 3; i++)
+	{
+		textList[i]->destroy();
+	}
 
 }
 

@@ -8,10 +8,10 @@ Menu* menu;
 int main(int argc, char* argv[])
 {
 	game = new Game();
-	menu = new Menu();
-	game->init();
-	menu->init();
-	game->run();
+	if (game->init())
+	{
+		game->run();
+	}
 
 	return 0;
 }

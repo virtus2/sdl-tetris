@@ -12,5 +12,3 @@ SDL_Texture* TextureLoader::loadTexture(std::string path)
 	loadedTexture = SDL_CreateTextureFromSurface(Game::renderer, tempSurface);
 	return loadedTexture;
 }
-
-
