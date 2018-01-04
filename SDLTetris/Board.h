@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BOARD_H
+#define BOARD_H
 #include <SDL.h>
 #include <SDL_image.h>
 #include "Block.h"
@@ -33,4 +34,5 @@ class Board
 	void removeLine(int line);
 	void collapseLine(int line);
 };
+#endif /* BOARD_H */
 

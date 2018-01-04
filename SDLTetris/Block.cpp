@@ -386,3 +386,8 @@ void Block::rotate()
 			break;
 	}
 }
+
+void Block::destroy()
+{
+
+}

@@ -11,7 +11,7 @@ enum TILE
 class Tile
 {
 	public:
-
+	Tile();
 	int tileType;
 	coord pos;
 

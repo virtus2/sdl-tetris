@@ -2,6 +2,7 @@
 #include <cstdio>
 #include "Board.h"
 #include "Tile.h"
+#include "Menu.h"
 const int FPS = 60;
 const int frameDelay = 1000 / FPS;
 Uint32 frameStart;
@@ -47,7 +48,10 @@ bool Game::init()
 				if (loadMedia())
 				{
 					isRunning = true;
-
+					menu = new Menu();
+					menu->init();
+					menu->run();
+					
 					board = new Board();
 					block = new Block();
 					block->init();
@@ -487,6 +491,15 @@ void Game::close()
 	window = NULL;
 	SDL_DestroyRenderer(renderer);
 	renderer = NULL;
+
+	menu->close();
+	board->destroy();
+	block->destroy();
+	nextBlock->destroy();
+
+	board = NULL;
+	block = NULL;
+	nextBlock = NULL;
 
 	SDL_Quit();
 }

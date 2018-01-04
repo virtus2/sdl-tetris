@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOCK_H
+#define BLOCK_H
 #include <SDL.h>
 #include "Tile.h"
 enum COLOR
@@ -38,4 +39,6 @@ class Block
 	void init();
 	void fall();
 	void rotate();
+	void destroy();
 };
+#endif /* BLOCK_H */
