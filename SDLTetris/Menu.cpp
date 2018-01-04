@@ -21,7 +21,7 @@ bool Menu::init()
 		startText = new Text("asset\\FFFFORWA.TTF", "START", 20, 255, 255, 255);
 		closeText = new Text("asset\\FFFFORWA.TTF", "CLOSE", 20, 255, 255, 255);
 		tetrisText = new Text("asset\\FFFFORWA.TTF", "T E T R I S", 40, 255, 0, 0);
-		arrowText = new Text("asset\\FFFFORWA.TTF", "o", 12, 255, 255, 255);
+		arrowText = new Text("asset\\FFFFORWA.TTF", "o", 16, 255, 255, 255);
 		textList[0] = tetrisText;
 		textList[1] = startText;
 		textList[2] = closeText;

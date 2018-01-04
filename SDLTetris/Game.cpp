@@ -348,6 +348,7 @@ bool Game::checkRotateCollision(Block * block)
 				temp[3].pos.xpos = block->blockPiece[3].pos.xpos + 1;
 				temp[3].pos.ypos = block->blockPiece[3].pos.ypos;
 			}
+			break;
 		case L:
 			if (block->rotateType == 0)
 			{
@@ -393,6 +394,7 @@ bool Game::checkRotateCollision(Block * block)
 				temp[3].pos.xpos = block->blockPiece[3].pos.xpos + 1;
 				temp[3].pos.ypos = block->blockPiece[3].pos.ypos - 1;
 			}
+			break;
 		case J:
 			if (block->rotateType == 0)
 			{
@@ -438,6 +440,7 @@ bool Game::checkRotateCollision(Block * block)
 				temp[3].pos.xpos = block->blockPiece[3].pos.xpos + 2;
 				temp[3].pos.ypos = block->blockPiece[3].pos.ypos;
 			}
+			break;
 		case T:
 			if (block->rotateType == 0)
 			{
@@ -483,6 +486,7 @@ bool Game::checkRotateCollision(Block * block)
 				temp[3].pos.xpos = block->blockPiece[3].pos.xpos;
 				temp[3].pos.ypos = block->blockPiece[3].pos.ypos;
 			}
+			break;
 		default: break;
 	}
 

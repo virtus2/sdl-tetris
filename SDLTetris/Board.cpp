@@ -44,6 +44,9 @@ Board::Board()
 void Board::draw()
 {
 	SDL_Rect dst;
+	dst.w = TEXTURE_WIDTH;
+	dst.h = TEXTURE_HEIGHT;
+	/* test output
 	for (int i = 0; i < 22; i++)
 	{
 		for (int j = 0; j < 12; j++)
@@ -74,32 +77,25 @@ void Board::draw()
 			}
 		}
 	}
+	*/
 	for (int i = 0; i < 22; i++)
 	{
+		dst.y = 32 + i * TEXTURE_HEIGHT;
 		for (int j = 0; j < 12; j++)
 		{
 			if (tileMap[i][j].tileType == TILE::BORDER)
 			{
-				dst.x = j * TEXTURE_WIDTH;
-				dst.y = 32 + i * TEXTURE_HEIGHT;
-				dst.w = TEXTURE_WIDTH;
-				dst.h = TEXTURE_HEIGHT;
+				dst.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2 + j * TEXTURE_WIDTH;
 				tileMap[i][j].render(boarderTexture, &srcR, &dst);
 			}
 			else if (tileMap[i][j].tileType == TILE::EMPTY)
 			{
-				dst.x = j * TEXTURE_WIDTH;
-				dst.y = 32 + i * TEXTURE_HEIGHT;
-				dst.w = TEXTURE_WIDTH;
-				dst.h = TEXTURE_HEIGHT;
+				dst.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2 + j * TEXTURE_WIDTH;
 				tileMap[i][j].render(emptyTexture, &srcR, &dst);
 			}
 			else if (tileMap[i][j].tileType == TILE::BLOCK)
 			{
-				dst.x = j * TEXTURE_WIDTH;
-				dst.y = 32 + i * TEXTURE_HEIGHT;
-				dst.w = TEXTURE_WIDTH;
-				dst.h = TEXTURE_HEIGHT;
+				dst.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2 + j * TEXTURE_WIDTH;
 				tileMap[i][j].render(blockTexture, &srcR, &dst);
 			}
 		}

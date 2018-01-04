@@ -281,6 +281,7 @@ void Block::rotate()
 				blockPiece[3].pos.ypos = blockPiece[3].pos.ypos - 1;
 				rotateType = 0;
 			}
+			break;
 		case J:
 			if (rotateType == 0)
 			{
