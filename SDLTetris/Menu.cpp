@@ -109,5 +109,40 @@ void Menu::close()
 
 }
 
+bool Menu::gameOver()
+{
+	Text* endText = new Text("asset\\FFFFORWA.TTF", "G A M E O V E R", 30, 255, 0, 0);
+	SDL_Rect endDst;
+	endDst.h = endText->getHeight();
+	endDst.w = endText->getWidth();
+	endDst.x = SCREEN_WIDTH / 2 - endDst.w / 2;
+	endDst.y = SCREEN_HEIGHT / 2 - endDst.h / 2;
+	bool gameContinue = true;
+	while (1)
+	{
+		SDL_Event event;
+		if (SDL_PollEvent(&event) != 0)
+		{
+			if (event.type == SDL_KEYDOWN)
+			{
+				if (event.key.keysym.sym == SDLK_RETURN)
+				{
+					break;
+				}
+			}
+			else if (event.type == SDL_QUIT)
+			{
+				gameContinue = false;
+				break;
+			}
+		}
+		SDL_RenderClear(Game::renderer);
+		endText->render(&endDst);
+		SDL_RenderPresent(Game::renderer);
+		SDL_Delay(10);
+	}
+	return gameContinue;
+}
+
 
 

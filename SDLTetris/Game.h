@@ -17,7 +17,7 @@ class Game
 	SDL_Surface* screenSurface;
 	Menu* menu;
 
-	bool isRunning = false;
+	bool isOver = false;
 	Block* block;
 	Block* nextBlock;
 
@@ -25,14 +25,16 @@ class Game
 	
 	static SDL_Renderer* renderer;
 	Board* board;
-	
-	bool running() { return isRunning; }
+	bool isRunning = true;
+
 	bool init();
 	bool loadMedia();
+	void gameStart();
 	void run();
 	void handleEvents();
 	void update();
 	void render();
+	void gameOver();
 	bool checkCollision();
 	bool checkMoveCollision(int key);
 	bool checkRotateCollision(Block* block);

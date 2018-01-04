@@ -2,7 +2,7 @@
 #include "TextureLoader.h"
 #include "Game.h"
 
-Board::Board()
+void Board::init()
 {
 	boarderTexture = TextureLoader::loadTexture("asset\\boarder.png");
 	emptyTexture = TextureLoader::loadTexture("asset\\empty.png");
@@ -17,7 +17,7 @@ Board::Board()
 	dstR.w = BOARD_WIDTH;
 	dstR.h = BOARD_HEIGHT;
 
-	for(int i = 0; i < 22; i++)
+	for (int i = 0; i < 22; i++)
 	{
 		for (int j = 0; j < 12; j++)
 		{
@@ -35,11 +35,10 @@ Board::Board()
 				tileMap[i][j].tileType = TILE::BORDER;
 				landedMap[i][j].tileType = TILE::BORDER;
 			}
-			
+
 		}
 	}
 }
-
 
 void Board::draw()
 {
@@ -150,9 +149,18 @@ void Board::rotateBlock(Block * block)
 	block->rotate();
 }
 
-void Board::checkLine()
+bool Board::checkLine()
 {
 	int count;
+	bool gameOver = false;
+	for (int i = 1; i < 11; i++)
+	{
+		if (landedMap[1][i].tileType == TILE::BLOCK)
+		{
+			gameOver = true;
+			return gameOver;
+		}
+	}
 	for (int i = 1; i < 21; i++)
 	{
 		count = 0;
@@ -174,6 +182,7 @@ void Board::checkLine()
 				break;
 		}
 	}
+	return gameOver;
 }
 
 void Board::removeLine(int line)

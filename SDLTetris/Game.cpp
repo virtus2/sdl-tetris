@@ -3,6 +3,7 @@
 #include "Board.h"
 #include "Tile.h"
 #include "Menu.h"
+#include "Text.h"
 const int FPS = 60;
 const int frameDelay = 1000 / FPS;
 Uint32 frameStart;
@@ -45,31 +46,7 @@ bool Game::init()
 			{
 				// Initialize renderer color
 				SDL_SetRenderDrawColor(renderer, 0x0, 0x0, 0x0, 0xFF);
-				if (loadMedia())
-				{
-					isRunning = true;
-					menu = new Menu();
-					if (!menu->init()) 
-					{
-						success = false;
-						return success;
-					}
-					int choose = menu->run();
-					if (choose == MENU::START)
-					{
-						board = new Board();
-						block = new Block();
-						block->init();
-						fallStart = SDL_GetTicks();
-						fallCount = 500;
-					}
-					else if (choose == MENU::CLOSE)
-					{	
-						success = false;
-					}
-					
-				}
-				else
+				if (!loadMedia())
 				{
 					success = false;
 				}
@@ -94,11 +71,29 @@ bool Game::loadMedia()
 	return success;
 }
 
+void Game::gameStart()
+{
+	isRunning = true;
+	isOver = false;
+	board = new Board();
+	block = new Block();
+	board->init();
+	block->init();
+	fallStart = SDL_GetTicks();
+	fallCount = 500;
+
+	run();
+}
+
 
 void Game::run()
 {
 	while (isRunning)
 	{
+		if (isOver == true)
+		{
+			break;
+		}
 		frameStart = SDL_GetTicks();
 
 		handleEvents();
@@ -110,8 +105,8 @@ void Game::run()
 		{
 			SDL_Delay(frameDelay - frameTime);
 		}
+		
 	}
-	close();
 }
 
 void Game::handleEvents()
@@ -213,7 +208,10 @@ void Game::update()
 		fallStart = SDL_GetTicks();
 	}
 	board->setBlockOnMap(block);
-	board->checkLine();
+	if (board->checkLine())
+	{
+		isOver = true;
+	}
 
 	if (block->isActive == false)
 	{
@@ -228,6 +226,19 @@ void Game::render()
 	SDL_RenderClear(renderer);
 	board->draw();
 	SDL_RenderPresent(renderer);
+}
+
+void Game::gameOver()
+{
+	if(board != NULL) board->destroy();
+	if(!block != NULL) block->destroy();
+	if(!nextBlock != NULL) nextBlock->destroy();
+
+	board = NULL;
+	block = NULL;
+	nextBlock = NULL;
+
+	
 }
 
 bool Game::checkCollision()
@@ -506,10 +517,9 @@ void Game::close()
 	SDL_DestroyRenderer(renderer);
 	renderer = NULL;
 
-	menu->close();
-	board->destroy();
-	block->destroy();
-	nextBlock->destroy();
+	if(board != NULL) board->destroy();
+	if(block != NULL) block->destroy();
+	if(nextBlock != NULL) nextBlock->destroy();
 
 	board = NULL;
 	block = NULL;

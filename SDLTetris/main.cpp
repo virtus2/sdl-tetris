@@ -8,10 +8,30 @@ Menu* menu;
 int main(int argc, char* argv[])
 {
 	game = new Game();
-	if (game->init())
+	menu = new Menu();
+	if (!game->init()) return -1;
+	if (!menu->init()) return -1;
+	while (game->isRunning == true)
 	{
-		game->run();
-	}
 
+		int choose = menu->run();
+		if (choose == MENU::START)
+		{
+			game->gameStart();
+		}
+		else if (choose == MENU::CLOSE)
+		{
+			game->isRunning = false;
+			break;
+		}
+
+		game->gameOver();
+		if (menu->gameOver() == false)
+		{
+			break;
+		}
+	}
+	menu->close();
+	game->close();
 	return 0;
 }

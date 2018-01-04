@@ -20,17 +20,17 @@ class Board
 	SDL_Rect dstR;
 
 	public:
-	Board();
 
 	Tile tileMap[22][12];
 	Tile landedMap[22][12];
+	void init();
 	void draw();
 	void destroy();
 	void setBlockOnMap(Block* block);
 	void clearBlockOnMap(Block* block);
 	void moveBlock(Block* block, int key);
 	void rotateBlock(Block* block);
-	void checkLine();
+	bool checkLine();
 	void removeLine(int line);
 	void collapseLine(int line);
 };

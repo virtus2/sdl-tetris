@@ -29,6 +29,7 @@ class Menu
 	int run();
 	void renderText();
 	void close();
+	bool gameOver();
 	
 };
 
