@@ -16,6 +16,14 @@ class Board
 	SDL_Texture* borderTexture;
 	SDL_Texture* emptyTexture;
 	SDL_Texture* blockTexture;
+	SDL_Texture* redBlockTexture;
+	SDL_Texture* orangeBlockTexture;
+	SDL_Texture* yellowBlockTexture;
+	SDL_Texture* greenBlockTexture;
+	SDL_Texture* blueBlockTexture;
+	SDL_Texture* pinkBlockTexture;
+	SDL_Texture* purpleBlockTexture;
+
 	SDL_Rect srcR;
 	SDL_Rect dstR;
 	SDL_Rect dst;
@@ -27,7 +35,15 @@ class Board
 
 	Tile tileMap[22][12];
 	Tile landedMap[22][12];
-	int nextMap[6][6];
+	int nextMap[6][6] = 
+	{ 
+		1,1,1,1,1,1,
+		1,0,0,0,0,1,
+		1,0,0,0,0,1,
+		1,0,0,0,0,1,
+		1,0,0,0,0,1,
+		1,1,1,1,1,1,
+	};
 	void init();
 	void draw();
 	void destroy();

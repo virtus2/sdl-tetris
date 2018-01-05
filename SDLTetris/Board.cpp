@@ -6,7 +6,13 @@ void Board::init()
 {
 	borderTexture = TextureLoader::loadTexture("asset\\boarder.png");
 	emptyTexture = TextureLoader::loadTexture("asset\\empty.png");
-	blockTexture = TextureLoader::loadTexture("asset\\block.png");
+	redBlockTexture = TextureLoader::loadTexture("asset\\redBlock.png");
+	orangeBlockTexture = TextureLoader::loadTexture("asset\\orangeBlock.png");
+	yellowBlockTexture = TextureLoader::loadTexture("asset\\yellowBlock.png");
+	greenBlockTexture = TextureLoader::loadTexture("asset\\greenBlock.png");
+	blueBlockTexture = TextureLoader::loadTexture("asset\\blueBlock.png");
+	pinkBlockTexture = TextureLoader::loadTexture("asset\\pinkBlock.png");
+	purpleBlockTexture = TextureLoader::loadTexture("asset\\purpleBlock.png");
 
 	srcR.x = 0;
 	srcR.y = 0;
@@ -41,13 +47,6 @@ void Board::init()
 				tileMap[i][j].tileType = TILE::BORDER;
 				landedMap[i][j].tileType = TILE::BORDER;
 			}
-
-		}
-	}
-	for (int i = 0; i < 6; i++)
-	{
-		for (int j = 0; j < 6; j++)
-		{
 
 		}
 	}
@@ -92,20 +91,65 @@ void Board::draw()
 		dst.y = 32 + i * TEXTURE_HEIGHT;
 		for (int j = 0; j < 12; j++)
 		{
+			dst.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2 + j * TEXTURE_WIDTH;
 			if (tileMap[i][j].tileType == TILE::BORDER)
 			{
-				dst.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2 + j * TEXTURE_WIDTH;
 				tileMap[i][j].render(borderTexture, &srcR, &dst);
 			}
 			else if (tileMap[i][j].tileType == TILE::EMPTY)
 			{
-				dst.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2 + j * TEXTURE_WIDTH;
 				tileMap[i][j].render(emptyTexture, &srcR, &dst);
 			}
-			else if (tileMap[i][j].tileType == TILE::BLOCK)
+			else if (tileMap[i][j].tileType == TILE::RED)
 			{
-				dst.x = SCREEN_WIDTH / 2 - BOARD_WIDTH / 2 + j * TEXTURE_WIDTH;
-				tileMap[i][j].render(blockTexture, &srcR, &dst);
+				tileMap[i][j].render(redBlockTexture, &srcR, &dst);
+			}
+			else if (tileMap[i][j].tileType == TILE::ORANGE)
+			{
+				tileMap[i][j].render(orangeBlockTexture, &srcR, &dst);
+			}
+			else if (tileMap[i][j].tileType == TILE::YELLOW) 
+			{
+				tileMap[i][j].render(yellowBlockTexture, &srcR, &dst);
+			}
+			else if (tileMap[i][j].tileType == TILE::GREEN)
+			{
+				tileMap[i][j].render(greenBlockTexture, &srcR, &dst);
+			}
+			else if (tileMap[i][j].tileType == TILE::BLUE)
+			{
+				tileMap[i][j].render(blueBlockTexture, &srcR, &dst);
+			}
+			else if (tileMap[i][j].tileType == TILE::PINK)
+			{
+				tileMap[i][j].render(pinkBlockTexture, &srcR, &dst);
+			}
+			else if (tileMap[i][j].tileType == TILE::PURPLE)
+			{
+				tileMap[i][j].render(purpleBlockTexture, &srcR, &dst);
+			}
+		}
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		nextdst.y = SCREEN_HEIGHT / 4 + i * TEXTURE_HEIGHT;
+		for (int j = 0; j < 6; j++)
+		{
+			if (nextMap[i][j] == TILE::BORDER)
+			{
+				nextdst.x = 3 * SCREEN_WIDTH / 4 + j * TEXTURE_WIDTH;
+				SDL_RenderCopy(Game::renderer, borderTexture, &srcR, &nextdst);
+			}
+			else if (nextMap[i][j] == TILE::EMPTY)
+			{
+				nextdst.x = 3 * SCREEN_WIDTH / 4 + j * TEXTURE_WIDTH;
+				SDL_RenderCopy(Game::renderer, emptyTexture, &srcR, &nextdst);
+			}
+			else if (nextMap[i][j] == TILE::BLOCK)
+			{
+				nextdst.x = 3 * SCREEN_WIDTH / 4 + j * TEXTURE_WIDTH;
+				SDL_RenderCopy(Game::renderer, blockTexture, &srcR, &nextdst);
 			}
 		}
 	}
@@ -117,67 +161,24 @@ void Board::setBlockOnMap(Block * block)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		tileMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos].tileType = TILE::BLOCK;
+		tileMap[block->blockPiece[i].pos.ypos][block->blockPiece[i].pos.xpos].tileType = TILE::BLOCK + block->blockType + 1;
 	}
 }
 
 void Board::drawBlockOnNext(Block * block)
 {
-	for (int i = 0; i < 8; i++)
+	for (int i = 1; i < 5; i++)
 	{
-		for (int j = 0; j < 8; j++)
+		for (int j = 1; j < 5; j++)
 		{
-			if (i == 0 || i == 7)
-			{
-				nextdst.x = 3 * SCREEN_WIDTH / 4 + j * TEXTURE_WIDTH - 4 * TEXTURE_WIDTH + 32;
-				nextdst.y = SCREEN_HEIGHT / 4 + 5 * TEXTURE_HEIGHT + i * TEXTURE_HEIGHT - 8 * TEXTURE_HEIGHT;
-				SDL_RenderCopy(Game::renderer, borderTexture, &srcR, &nextdst);
-			}
-			else
-			{
-				if (j == 0 || j == 7)
-				{
-					nextdst.x = 3 * SCREEN_WIDTH / 4 + j * TEXTURE_WIDTH - 4 * TEXTURE_WIDTH + 32;
-					nextdst.y = SCREEN_HEIGHT / 4 + 5 * TEXTURE_HEIGHT + i * TEXTURE_HEIGHT - 8 * TEXTURE_HEIGHT;
-					SDL_RenderCopy(Game::renderer, borderTexture, &srcR, &nextdst);
-				}
-			}
+			nextMap[i][j] = TILE::EMPTY;
 		}
 	}
-	switch (block->blockType)
+	for (int i = 0; i < 4; i++)
 	{
-		case O:
-			for (int i = 0; i < 2; i++)
-			{
-				for (int j = 0; j < 2; j++)
-				{
-					nextdst.x = 3 * SCREEN_WIDTH / 4 + i * TEXTURE_WIDTH;
-					nextdst.y = SCREEN_HEIGHT / 4 + j * TEXTURE_HEIGHT;
-					block->blockPiece[i].render(blockTexture, &nextsrc, &nextdst);
-				}
-			}
-			break;
-		case I:
-			for (int i = 0; i < 4; i++)
-			{
-				nextdst.x = 3 * SCREEN_WIDTH / 4 + i * TEXTURE_WIDTH - TEXTURE_WIDTH;
-				nextdst.y = SCREEN_HEIGHT / 4;
-				block->blockPiece[i].render(blockTexture, &nextsrc, &nextdst);
-			}
-			break;
-		case Z:
-
-			break;
-		case L:
-
-			break;
-		case J:
-
-			break;
-		case T:
-
-			break;
+		nextMap[block->blockPiece[i].pos.ypos + 1][block->blockPiece[i].pos.xpos - 3] = TILE::BLOCK + block->blockType + 1;
 	}
+
 }
 
 void Board::clearBlockOnMap(Block * block)
@@ -225,7 +226,7 @@ bool Board::checkLine()
 	bool gameOver = false;
 	for (int i = 1; i < 11; i++)
 	{
-		if (landedMap[1][i].tileType == TILE::BLOCK)
+		if (landedMap[1][i].tileType >= TILE::BLOCK)
 		{
 			gameOver = true;
 			return gameOver;
@@ -236,7 +237,7 @@ bool Board::checkLine()
 		count = 0;
 		for (int j = 1; j < 11; j++)
 		{
-			if (landedMap[i][j].tileType == TILE::BLOCK)
+			if (landedMap[i][j].tileType >= TILE::BLOCK)
 			{
 				count++;
 				if (count == 10)
@@ -268,12 +269,12 @@ void Board::collapseLine(int line)
 {
 	for (int i = 1; i < 11; i++)
 	{
-		if (landedMap[line - 1][i].tileType == TILE::BLOCK)
+		if (landedMap[line - 1][i].tileType >= TILE::BLOCK)
 		{
-			landedMap[line][i].tileType = TILE::BLOCK;
+			landedMap[line][i].tileType = landedMap[line - 1][i].tileType;
 			landedMap[line - 1][i].tileType = TILE::EMPTY;
 
-			tileMap[line][i].tileType = TILE::BLOCK;
+			tileMap[line][i].tileType = tileMap[line - 1][i].tileType;
 			tileMap[line - 1][i].tileType = TILE::EMPTY;
 		}
 	}

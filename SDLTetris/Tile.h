@@ -6,6 +6,13 @@ enum TILE
 	EMPTY,
 	BORDER,
 	BLOCK,
+	RED,
+	ORANGE,
+	YELLOW,
+	GREEN,
+	BLUE,
+	PINK,
+	PURPLE,
 };
 
 class Tile

@@ -80,6 +80,7 @@ void Game::gameStart()
 	nextBlock = new Block();
 	board->init();
 	block->init();
+	nextBlock->init();
 	
 	fallStart = SDL_GetTicks();
 	fallCount = 500;
@@ -219,8 +220,8 @@ void Game::update()
 	{
 		delete block;
 		block = nextBlock;
-		block->init();
 		nextBlock = new Block();
+		nextBlock->init();
 	}
 }
 
