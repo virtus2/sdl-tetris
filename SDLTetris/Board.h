@@ -52,7 +52,7 @@ class Board
 	void clearBlockOnMap(Block* block);
 	void moveBlock(Block* block, int key);
 	void rotateBlock(Block* block);
-	bool checkLine();
+	bool checkLine(int& score);
 	void removeLine(int line);
 	void collapseLine(int line);
 };

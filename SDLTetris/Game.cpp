@@ -4,6 +4,7 @@
 #include "Tile.h"
 #include "Menu.h"
 #include "Text.h"
+
 const int FPS = 60;
 const int frameDelay = 1000 / FPS;
 Uint32 frameStart;
@@ -75,9 +76,24 @@ void Game::gameStart()
 {
 	isRunning = true;
 	isOver = false;
+	gameScore = 0;
 	board = new Board();
 	block = new Block();
 	nextBlock = new Block();
+	nextText = new Text("asset\\FFFFORWA.TTF", "NEXT: " , 20, 255, 255, 255);
+	nextDst.h = nextText->getHeight();
+	nextDst.w = nextText->getWidth();
+	nextDst.x = 3 * SCREEN_WIDTH / 4 - nextDst.w;
+	nextDst.y = SCREEN_HEIGHT / 4;
+
+	scoreText = new Text("asset\\FFFFORWA.TTF", "SCORE: ", 20, 255, 255, 255);
+	scoreDst.h = scoreText->getHeight();
+	scoreDst.w = scoreText->getWidth();
+	scoreDst.x = 3 * SCREEN_WIDTH / 4 - scoreDst.w;
+	scoreDst.y = SCREEN_HEIGHT / 4 + SCREEN_HEIGHT / 3;
+
+	updateScore();
+
 	board->init();
 	block->init();
 	nextBlock->init();
@@ -211,10 +227,11 @@ void Game::update()
 		fallStart = SDL_GetTicks();
 	}
 	board->setBlockOnMap(block);
-	if (board->checkLine())
+	if (board->checkLine(gameScore))
 	{
 		isOver = true;
 	}
+	updateScore();
 
 	if (block->isActive == false)
 	{
@@ -225,11 +242,28 @@ void Game::update()
 	}
 }
 
+void Game::updateScore()
+{
+	if (scoreNumberText != NULL)
+	{
+		scoreNumberText->destroy();
+	}
+	std::string str = std::to_string(gameScore);
+	scoreNumberText = new Text("asset\\FFFFORWA.TTF", str, 20, 255, 255, 255);
+	numberDst.h = scoreNumberText->getHeight();
+	numberDst.w = scoreNumberText->getWidth();
+	numberDst.x = 3 * SCREEN_WIDTH / 4 - numberDst.w + 9 *numberDst.w / 10;
+	numberDst.y = SCREEN_HEIGHT / 4 + SCREEN_HEIGHT / 3;
+}
+
 void Game::render()
 {
 	SDL_RenderClear(renderer);
 	board->draw();
 	board->drawBlockOnNext(nextBlock);
+	nextText->render(&nextDst);
+	scoreText->render(&scoreDst);
+	scoreNumberText->render(&numberDst);
 	SDL_RenderPresent(renderer);
 }
 

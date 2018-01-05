@@ -7,6 +7,7 @@
 class Menu;
 class Board;
 class Block;
+class Text;
 const int SCREEN_WIDTH = 1280;
 const int SCREEN_HEIGHT = 768;
 
@@ -20,9 +21,15 @@ class Game
 	bool isOver = false;
 	Block* block;
 	Block* nextBlock;
+	Text* scoreText;
+	SDL_Rect scoreDst;
+	Text* nextText;
+	SDL_Rect nextDst;
+	Text* scoreNumberText;
+	SDL_Rect numberDst;
 
 	public:
-	
+	int gameScore;
 	static SDL_Renderer* renderer;
 	Board* board;
 	bool isRunning = true;
@@ -33,6 +40,7 @@ class Game
 	void run();
 	void handleEvents();
 	void update();
+	void updateScore();
 	void render();
 	void gameOver();
 	bool checkCollision();

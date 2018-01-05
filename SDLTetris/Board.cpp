@@ -136,20 +136,42 @@ void Board::draw()
 		nextdst.y = SCREEN_HEIGHT / 4 + i * TEXTURE_HEIGHT;
 		for (int j = 0; j < 6; j++)
 		{
+			nextdst.x = 3 * SCREEN_WIDTH / 4 + j * TEXTURE_WIDTH;
 			if (nextMap[i][j] == TILE::BORDER)
 			{
-				nextdst.x = 3 * SCREEN_WIDTH / 4 + j * TEXTURE_WIDTH;
 				SDL_RenderCopy(Game::renderer, borderTexture, &srcR, &nextdst);
 			}
 			else if (nextMap[i][j] == TILE::EMPTY)
 			{
-				nextdst.x = 3 * SCREEN_WIDTH / 4 + j * TEXTURE_WIDTH;
 				SDL_RenderCopy(Game::renderer, emptyTexture, &srcR, &nextdst);
 			}
-			else if (nextMap[i][j] == TILE::BLOCK)
+			else if (nextMap[i][j] == TILE::RED)
 			{
-				nextdst.x = 3 * SCREEN_WIDTH / 4 + j * TEXTURE_WIDTH;
-				SDL_RenderCopy(Game::renderer, blockTexture, &srcR, &nextdst);
+				SDL_RenderCopy(Game::renderer, redBlockTexture, &srcR, &nextdst);
+			}
+			else if (nextMap[i][j] == TILE::ORANGE)
+			{
+				SDL_RenderCopy(Game::renderer, orangeBlockTexture, &srcR, &nextdst);
+			}
+			else if (nextMap[i][j] == TILE::YELLOW)
+			{
+				SDL_RenderCopy(Game::renderer, yellowBlockTexture, &srcR, &nextdst);
+			}
+			else if (nextMap[i][j] == TILE::GREEN)
+			{
+				SDL_RenderCopy(Game::renderer, greenBlockTexture, &srcR, &nextdst);
+			}
+			else if (nextMap[i][j] == TILE::BLUE)
+			{
+				SDL_RenderCopy(Game::renderer, blueBlockTexture, &srcR, &nextdst);
+			}
+			else if (nextMap[i][j] == TILE::PINK)
+			{
+				SDL_RenderCopy(Game::renderer, pinkBlockTexture, &srcR, &nextdst);
+			}
+			else if (nextMap[i][j] == TILE::PURPLE)
+			{
+				SDL_RenderCopy(Game::renderer, purpleBlockTexture, &srcR, &nextdst);
 			}
 		}
 	}
@@ -220,7 +242,7 @@ void Board::rotateBlock(Block * block)
 	block->rotate();
 }
 
-bool Board::checkLine()
+bool Board::checkLine(int& score)
 {
 	int count;
 	bool gameOver = false;
@@ -243,6 +265,7 @@ bool Board::checkLine()
 				if (count == 10)
 				{
 					removeLine(i);
+					score += 10;
 					for (int k = i; k > 1; k--)
 					{
 						collapseLine(k);
