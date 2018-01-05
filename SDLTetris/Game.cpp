@@ -77,6 +77,7 @@ void Game::gameStart()
 	isRunning = true;
 	isOver = false;
 	gameScore = 0;
+	gameLevel = 1;
 	board = new Board();
 	block = new Block();
 	nextBlock = new Block();
@@ -92,7 +93,14 @@ void Game::gameStart()
 	scoreDst.x = 3 * SCREEN_WIDTH / 4 - scoreDst.w;
 	scoreDst.y = SCREEN_HEIGHT / 4 + SCREEN_HEIGHT / 3;
 
+	levelText = new Text("asset\\FFFFORWA.TTF", "LEVEL: ", 20, 255, 255, 255);
+	levelDst.h = levelText->getHeight();
+	levelDst.w = levelText->getWidth();
+	levelDst.x = 3 * SCREEN_WIDTH / 4 - scoreDst.w;
+	levelDst.y = SCREEN_HEIGHT / 4 + SCREEN_HEIGHT / 3 + levelDst.h;
+
 	updateScore();
+	updateLevel();
 
 	board->init();
 	block->init();
@@ -232,7 +240,7 @@ void Game::update()
 		isOver = true;
 	}
 	updateScore();
-
+	updateLevel();
 	if (block->isActive == false)
 	{
 		delete block;
@@ -247,13 +255,39 @@ void Game::updateScore()
 	if (scoreNumberText != NULL)
 	{
 		scoreNumberText->destroy();
+		scoreNumberText = NULL;
 	}
 	std::string str = std::to_string(gameScore);
 	scoreNumberText = new Text("asset\\FFFFORWA.TTF", str, 20, 255, 255, 255);
-	numberDst.h = scoreNumberText->getHeight();
-	numberDst.w = scoreNumberText->getWidth();
-	numberDst.x = 3 * SCREEN_WIDTH / 4 - numberDst.w + 9 *numberDst.w / 10;
-	numberDst.y = SCREEN_HEIGHT / 4 + SCREEN_HEIGHT / 3;
+	scoreNumberDst.h = scoreNumberText->getHeight();
+	scoreNumberDst.w = scoreNumberText->getWidth();
+	scoreNumberDst.x = 3 * SCREEN_WIDTH / 4 - scoreNumberDst.w + 9 *scoreNumberDst.w / 10;
+	scoreNumberDst.y = SCREEN_HEIGHT / 4 + SCREEN_HEIGHT / 3;
+
+	if (gameScore >= 10 && gameScore <= 900)
+	{
+		gameLevel = 1 + ((gameScore - 10) / 100);
+	}
+	else if (gameScore >= 910)
+	{
+		gameLevel = 10;
+	}
+	fallCount = (11 - gameLevel) * 50;
+}
+
+void Game::updateLevel()
+{
+	if (levelNumberText != NULL)
+	{
+		levelNumberText->destroy();
+		levelNumberText = NULL;
+	}
+	std::string str = std::to_string(gameLevel);
+	levelNumberText = new Text("asset\\FFFFORWA.TTF", str, 20, 255, 255, 255);
+	levelNumberDst.h = levelNumberText->getHeight();
+	levelNumberDst.w = levelNumberText->getWidth();
+	levelNumberDst.x = 3 * SCREEN_WIDTH / 4 - levelNumberDst.w + 9 * levelNumberDst.w / 10;
+	levelNumberDst.y = SCREEN_HEIGHT / 4 + SCREEN_HEIGHT / 3 + levelNumberDst.h;
 }
 
 void Game::render()
@@ -263,21 +297,27 @@ void Game::render()
 	board->drawBlockOnNext(nextBlock);
 	nextText->render(&nextDst);
 	scoreText->render(&scoreDst);
-	scoreNumberText->render(&numberDst);
+	scoreNumberText->render(&scoreNumberDst);
+	levelText->render(&levelDst);
+	levelNumberText->render(&levelNumberDst);
 	SDL_RenderPresent(renderer);
 }
 
 void Game::gameOver()
 {
-	if(board != NULL) board->destroy();
-	if(!block != NULL) block->destroy();
-	if(!nextBlock != NULL) nextBlock->destroy();
+	if (board != NULL) board->destroy();
+	if (block != NULL) block->destroy();
+	if (nextBlock != NULL) nextBlock->destroy();
+	if (scoreText != NULL) scoreText->destroy();
+	if (nextText != NULL) nextText->destroy();
+	if (scoreNumberText != NULL) scoreNumberText->destroy();
 
 	board = NULL;
 	block = NULL;
 	nextBlock = NULL;
-
-	
+	scoreText = NULL;
+	nextText = NULL;
+	scoreNumberText = NULL;
 }
 
 bool Game::checkCollision()
@@ -559,10 +599,16 @@ void Game::close()
 	if(board != NULL) board->destroy();
 	if(block != NULL) block->destroy();
 	if(nextBlock != NULL) nextBlock->destroy();
+	if (scoreText != NULL) scoreText->destroy();
+	if (nextText != NULL) nextText->destroy();
+	if (scoreNumberText != NULL) scoreNumberText->destroy();
 
 	board = NULL;
 	block = NULL;
 	nextBlock = NULL;
+	scoreText = NULL;
+	nextText = NULL;
+	scoreNumberText = NULL;
 
 	SDL_Quit();
 }

@@ -26,10 +26,15 @@ class Game
 	Text* nextText;
 	SDL_Rect nextDst;
 	Text* scoreNumberText;
-	SDL_Rect numberDst;
+	SDL_Rect scoreNumberDst;
+	Text* levelText;
+	SDL_Rect levelDst;
+	Text* levelNumberText;
+	SDL_Rect levelNumberDst;
 
 	public:
 	int gameScore;
+	int gameLevel;
 	static SDL_Renderer* renderer;
 	Board* board;
 	bool isRunning = true;
@@ -41,6 +46,7 @@ class Game
 	void handleEvents();
 	void update();
 	void updateScore();
+	void updateLevel();
 	void render();
 	void gameOver();
 	bool checkCollision();
