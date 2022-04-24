@@ -12,4 +12,4 @@ check out this link: http://lazyfoo.net/tutorials/SDL/01_hello_SDL/index.php
 
 FFFFORWA font - http://www.1001fonts.com/fff-forward-font.html
 
-Sprites - https://github.com/upbo
+Sprites - https://github.com/virtus2
