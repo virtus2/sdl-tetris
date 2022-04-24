@@ -13,3 +13,8 @@ check out this link: http://lazyfoo.net/tutorials/SDL/01_hello_SDL/index.php
 FFFFORWA font - http://www.1001fonts.com/fff-forward-font.html
 
 Sprites - https://github.com/virtus2
+
+## Screenshots
+
+![image](https://github.com/virtus2/sdl-tetris/blob/master/SDLTetris/asset/menu.png)  
+![image](https://github.com/virtus2/sdl-tetris/blob/master/SDLTetris/asset/game.png)
