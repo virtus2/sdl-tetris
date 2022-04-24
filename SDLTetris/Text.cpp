@@ -15,6 +15,7 @@ Text::Text(std::string fontLocation, std::string text, int fontSize, int r, int 
 	{
 		printf("Unable to create texture from rendered text! %s\n", SDL_GetError());
 	}
+	src.x = src.y = 0;
 	src.h = tempSurface->h;
 	src.w = tempSurface->w;
 	SDL_FreeSurface(tempSurface);
